@@ -22,7 +22,7 @@ services:
   server-files:
     build: .
     ports:
-      - "8888:8888"
+      - "80:8888"
     environment:
       - DB_HOST=db
       - DB_PORT=5432

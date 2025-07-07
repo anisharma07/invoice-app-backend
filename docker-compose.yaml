@@ -4,11 +4,14 @@ services:
   web:
     build: .
     ports:
-      - "8888:8888"
+      - "0.0.0.0:8888:8888" # Map host port 8888 to container port 8888 on all interfaces
     env_file:
       - .env
     depends_on:
       - db
+    restart: unless-stopped
+    environment:
+      - DEBUG=False
 
   db:
     image: postgres:16
@@ -21,6 +24,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
 volumes:
   postgres_data:

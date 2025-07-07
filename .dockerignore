@@ -82,7 +82,7 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.env
+# .env
 .venv
 env/
 venv/
@@ -118,5 +118,5 @@ cython_debug/
 secret.pem
 
 # Docker-specific files
-docker-compose.yaml
-Dockerfile
+# docker-compose.yaml
+# Dockerfile

@@ -42,6 +42,20 @@ def create_tables():
     )
     """)
 
+    # Create user_logos table for logo uploads
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS user_logos (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        filename TEXT NOT NULL,
+        s3_key TEXT NOT NULL,
+        logo_url TEXT NOT NULL,
+        file_size INTEGER,
+        content_type TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
     # Create indexes for better performance
     cursor.execute(
         "CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)")
@@ -49,6 +63,10 @@ def create_tables():
         "CREATE INDEX IF NOT EXISTS idx_user_files_user_id ON user_files(user_id)")
     cursor.execute(
         "CREATE INDEX IF NOT EXISTS idx_user_files_created_at ON user_files(created_at)")
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_user_logos_user_id ON user_logos(user_id)")
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_user_logos_created_at ON user_logos(created_at)")
 
     conn.commit()
     print("✅ Database tables created successfully!")

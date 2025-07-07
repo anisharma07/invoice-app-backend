@@ -9,6 +9,7 @@ from apis.download import download_bp
 from apis.echo import echo_bp
 from apis.auth import auth_bp
 from apis.server_files import server_files_bp
+from apis.logo import logo_bp
 from services.database import cursor, conn
 from services.s3 import ensure_bucket_exists
 import os
@@ -57,6 +58,7 @@ def create_app():
     app.register_blueprint(echo_bp, url_prefix='/echo')
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(server_files_bp, url_prefix='/server-files')
+    app.register_blueprint(logo_bp, url_prefix='/logos')
 
     return app
 
@@ -86,6 +88,20 @@ def init_database():
     )
     """)
 
+    # Create user_logos table for logo uploads
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS user_logos (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        filename TEXT NOT NULL,
+        s3_key TEXT NOT NULL,
+        logo_url TEXT NOT NULL,
+        file_size INTEGER,
+        content_type TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    """)
+
     # Create indexes for better performance
     cursor.execute(
         "CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)")
@@ -93,6 +109,10 @@ def init_database():
         "CREATE INDEX IF NOT EXISTS idx_user_files_user_id ON user_files(user_id)")
     cursor.execute(
         "CREATE INDEX IF NOT EXISTS idx_user_files_created_at ON user_files(created_at)")
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_user_logos_user_id ON user_logos(user_id)")
+    cursor.execute(
+        "CREATE INDEX IF NOT EXISTS idx_user_logos_created_at ON user_logos(created_at)")
 
     conn.commit()
 

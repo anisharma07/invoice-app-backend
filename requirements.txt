@@ -4,3 +4,7 @@ psycopg2-binary
 boto3
 PyJWT
 python-dotenv
+pdfkit
+beautifulsoup4
+requests
+lxml

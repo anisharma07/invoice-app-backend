@@ -6,6 +6,9 @@ from services.database import cursor, conn
 from services.s3 import s3_client, BUCKET_NAME
 from datetime import datetime
 from dotenv import load_dotenv
+import base64
+import requests
+from urllib.parse import urlparse
 
 # Load environment variables
 load_dotenv()
@@ -299,6 +302,77 @@ def test_upload():
                 "bucket": BUCKET_NAME,
                 "test_key": test_key
             }), 500
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@logo_bp.route('/url-to-base64', methods=['POST'])
+def convert_url_to_base64():
+    """Convert an image URL to base64 format"""
+    try:
+        # Check authentication
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({"error": "Authentication required"}), 401
+
+        token = auth_header.split(' ')[1]
+        user_id = get_user_from_token(token)
+
+        if not user_id:
+            return jsonify({"error": "Invalid or expired token"}), 401
+
+        # Get the image URL from request body
+        data = request.get_json()
+        if not data or 'image_url' not in data:
+            return jsonify({"error": "image_url is required in request body"}), 400
+
+        image_url = data['image_url']
+
+        # Validate URL format
+        try:
+            parsed_url = urlparse(image_url)
+            if not all([parsed_url.scheme, parsed_url.netloc]):
+                return jsonify({"error": "Invalid URL format"}), 400
+        except Exception:
+            return jsonify({"error": "Invalid URL format"}), 400
+
+        # Download the image
+        try:
+            response = requests.get(image_url, timeout=30)
+            response.raise_for_status()
+
+            # Check if content type is an image
+            content_type = response.headers.get('content-type', '')
+            if not content_type.startswith('image/'):
+                return jsonify({"error": "URL does not point to an image"}), 400
+
+            # Check file size (max 10MB for URL conversion)
+            content_length = len(response.content)
+            if content_length > 10 * 1024 * 1024:  # 10MB limit
+                return jsonify({"error": "Image too large. Maximum 10MB allowed"}), 400
+
+            # Convert to base64
+            image_base64 = base64.b64encode(response.content).decode('utf-8')
+
+            # Create data URL format
+            data_url = f"data:{content_type};base64,{image_base64}"
+
+            return jsonify({
+                "success": True,
+                "base64": image_base64,
+                "data_url": data_url,
+                "content_type": content_type,
+                "file_size": content_length,
+                "message": "Image successfully converted to base64"
+            })
+
+        except requests.exceptions.Timeout:
+            return jsonify({"error": "Request timeout. URL took too long to respond"}), 408
+        except requests.exceptions.RequestException as e:
+            return jsonify({"error": f"Failed to download image: {str(e)}"}), 400
+        except Exception as e:
+            return jsonify({"error": f"Error processing image: {str(e)}"}), 500
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

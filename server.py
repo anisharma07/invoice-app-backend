@@ -10,6 +10,7 @@ from apis.echo import echo_bp
 from apis.auth import auth_bp
 from apis.server_files import server_files_bp
 from apis.logo import logo_bp
+from apis.html_to_pdf import html_to_pdf_bp
 from services.database import cursor, conn
 from services.s3 import ensure_bucket_exists
 import os
@@ -59,6 +60,7 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(server_files_bp, url_prefix='/server-files')
     app.register_blueprint(logo_bp, url_prefix='/logos')
+    app.register_blueprint(html_to_pdf_bp, url_prefix='/pdf')
 
     return app
 
@@ -84,6 +86,9 @@ def init_database():
         filename TEXT NOT NULL,
         s3_key TEXT NOT NULL,
         file_size INTEGER,
+        file_type TEXT DEFAULT 'unknown',
+        source_type TEXT DEFAULT 'upload',
+        original_content TEXT DEFAULT '',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
@@ -139,5 +144,10 @@ if __name__ == "__main__":
     print("  POST /server-files/upload - Upload file")
     print("  GET  /server-files/download/{id} - Download file")
     print("  DELETE /server-files/delete/{id} - Delete file")
+    print("  POST /pdf/generate        - Generate PDF from HTML content/URL/file")
+    print("  POST /pdf/preview         - Preview PDF without storing")
+    print("  GET  /pdf/download/{id}   - Download generated PDF")
+    print("  GET  /pdf/list/{user_id}  - List user's PDFs")
+    print("  DELETE /pdf/delete/{id}   - Delete PDF file")
 
     app.run(host='0.0.0.0', port=port, debug=debug)

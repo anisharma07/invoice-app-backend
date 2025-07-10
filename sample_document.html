@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sample Document for PDF Conversion</title>
+    <style>
+      body {
+          font-family: 'Arial', sans-serif;
+          line-height: 1.6;
+          margin: 40px;
+          background-color: #f9f9f9;
+          color: #333;
+      }
+
+      .header {
+          text-align: center;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 30px;
+          border-radius: 10px;
+          margin-bottom: 30px;
+      }
+
+      .content {
+          background: white;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          margin-bottom: 20px;
+      }
+
+      h1 {
+          margin: 0;
+          font-size: 2.5em;
+      }
+
+      h2 {
+          color: #667eea;
+          border-bottom: 2px solid #667eea;
+          padding-bottom: 10px;
+      }
+
+      .highlight-box {
+          background-color: #e8f4fd;
+          border-left: 4px solid #667eea;
+          padding: 15px;
+          margin: 20px 0;
+      }
+
+      .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          margin: 20px 0;
+      }
+
+      .info-card {
+          background: #f8f9fa;
+          padding: 20px;
+          border-radius: 8px;
+          border: 1px solid #e9ecef;
+      }
+
+      .info-card h3 {
+          margin-top: 0;
+          color: #495057;
+      }
+
+      ul {
+          list-style-type: none;
+          padding-left: 0;
+      }
+
+      li {
+          padding: 5px 0;
+          border-bottom: 1px solid #eee;
+      }
+
+      li:before {
+          content: "✓ ";
+          color: #28a745;
+          font-weight: bold;
+      }
+
+      .footer {
+          text-align: center;
+          margin-top: 30px;
+          padding: 20px;
+          background: #343a40;
+          color: white;
+          border-radius: 10px;
+      }
+
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin: 20px 0;
+      }
+
+      th, td {
+          border: 1px solid #ddd;
+          padding: 12px;
+          text-align: left;
+      }
+
+      th {
+          background-color: #667eea;
+          color: white;
+      }
+
+      tr:nth-child(even) {
+          background-color: #f2f2f2;
+      }
+
+      .code-block {
+          background-color: #282c34;
+          color: #abb2bf;
+          padding: 15px;
+          border-radius: 5px;
+          font-family: 'Courier New', monospace;
+          margin: 15px 0;
+          overflow-x: auto;
+      }
+
+      @media print {
+          body {
+              background-color: white;
+          }
+          .content {
+              box-shadow: none;
+          }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>HTML to PDF Conversion Demo</h1>
+      <p>
+        This is a sample document showcasing various HTML elements and styling
+      </p>
+    </div>
+
+    <div class="content">
+      <h2>🎯 About This Document</h2>
+      <p>
+        This HTML document demonstrates the capabilities of the HTML to PDF
+        conversion API. It includes various HTML elements, CSS styling, and
+        layout techniques that will be preserved in the generated PDF.
+      </p>
+
+      <div class="highlight-box">
+        <strong>Important:</strong> This document is designed to showcase how
+        different HTML and CSS features are rendered in the PDF output.
+      </div>
+
+      <h2>📋 Features Demonstrated</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Typography</h3>
+          <ul>
+            <li>Multiple font families</li>
+            <li>Various font sizes</li>
+            <li>Text styling (bold, italic)</li>
+            <li>Color variations</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Layout</h3>
+          <ul>
+            <li>CSS Grid layouts</li>
+            <li>Flexbox alignment</li>
+            <li>Box shadows</li>
+            <li>Border radius</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Elements</h3>
+          <ul>
+            <li>Tables with styling</li>
+            <li>Lists with custom bullets</li>
+            <li>Images (if included)</li>
+            <li>Code blocks</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>📊 Sample Data Table</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HTML to PDF Conversion</td>
+            <td>✅ Complete</td>
+            <td>High</td>
+            <td>Fully functional with multiple input methods</td>
+          </tr>
+          <tr>
+            <td>URL to PDF</td>
+            <td>✅ Complete</td>
+            <td>High</td>
+            <td>Supports web page conversion</td>
+          </tr>
+          <tr>
+            <td>File Upload</td>
+            <td>✅ Complete</td>
+            <td>Medium</td>
+            <td>HTML file upload and conversion</td>
+          </tr>
+          <tr>
+            <td>Preview Mode</td>
+            <td>✅ Complete</td>
+            <td>Medium</td>
+            <td>Generate PDF without storage</td>
+          </tr>
+          <tr>
+            <td>Cloud Storage</td>
+            <td>✅ Complete</td>
+            <td>High</td>
+            <td>AWS S3 integration</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>💻 Code Example</h2>
+      <p>Here's how you can use the API programmatically:</p>
+
+      <div class="code-block">
+        import requests<br /><br />
+        # Generate PDF from HTML content<br />
+        response = requests.post('http://localhost:8888/pdf/generate', json={<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"user_id": "user123",<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"html_content": "&lt;h1&gt;Hello
+        World&lt;/h1&gt;",<br />
+        &nbsp;&nbsp;&nbsp;&nbsp;"filename": "hello.pdf"<br />
+        })<br /><br />
+        print(response.json())
+      </div>
+
+      <h2>🌟 Advanced Features</h2>
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Customization Options</h3>
+          <p>
+            Control page size, margins, orientation, and other PDF generation
+            settings through the options parameter.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Multiple Input Methods</h3>
+          <p>
+            Support for direct HTML content, URL fetching, and HTML file uploads
+            for maximum flexibility.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Cloud Integration</h3>
+          <p>
+            Automatic storage to AWS S3 with user-specific organization and
+            secure access.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Database Tracking</h3>
+          <p>
+            All generated PDFs are tracked in the database with metadata for
+            easy management.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Generated on: <span id="current-date"></span></p>
+      <p>HTML to PDF Conversion API Demo Document</p>
+    </div>
+
+    <script>
+      // This JavaScript will be executed before PDF generation
+      document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+      });
+    </script>
+  </body>
+</html>

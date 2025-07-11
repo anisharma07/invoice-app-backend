@@ -2,12 +2,14 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies including wkhtmltopdf
 RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
     postgresql-client \
     curl \
+    wkhtmltopdf \
+    xvfb \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install Python dependencies
